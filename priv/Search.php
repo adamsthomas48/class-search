@@ -120,6 +120,7 @@ class Search
         return $arrBuildings;
     }
 
+
     /**
      * getAllTechnologies
      * Queries the database and creates a Technology object for each result. Returns an array of Technology objects.
