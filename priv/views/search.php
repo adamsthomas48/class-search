@@ -13,7 +13,9 @@
             <h3 class="text-bright-light h4">Location</h3>
             <h4 class="h5">Campus</h4>
             <select class="form-control" id="campus">
-                <option value="any">Logan</option>
+                <?php foreach($arrCampuses as $objCampus){ ?>
+                    <option value="<?php echo $objCampus; ?>"><?php echo $objCampus; ?></option>
+                <?php } ?>
             </select>
             <h4 class="h5">Building</h4>
             <select class="form-control" id="building">
@@ -50,4 +52,4 @@
 <!-- photosphereviewer -->
 <script src="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.min.js"></script>
 
-<script src="https://classroomsupport.usu.edu/_resources/scripts/classroom-search/class-search.js"></script>
+<script src="https://classroomsupport.usu.edu/_resources/dev/classroom-search/class-search.js"></script>

@@ -21,7 +21,7 @@ class Search
      * @param string $strBuildingId, array $arrTechnologyIds, int $intMinCapacity, int $intMaxCapacity
      * @return array arrResults
      */
-    public function getResults($strBuildingId = 'any', $arrTechnologies = null, $intMinSeats = 0, $intMaxSeats = 500){
+    public function getResults($strBuildingId = 'any', $arrTechnologies = null, $intMinSeats = 0, $intMaxSeats = 500, $strCampus = "Logan"){
 
         $strFilterTechnologies = "";
         // loop through each technology with key and value
@@ -41,17 +41,18 @@ class Search
             $strFilterBuilding = "AND building_id = $strBuildingId";
         }
 
+        $strFilterCampus = "AND b.campus = '$strCampus'";
+
 
         $stringSql = sprintf("SELECT c.name, b.filter_code, b.building_name, c.seats, c.id, c.room_image_url, c.equipment_image_url
                                FROM classrooms as c, building_list as b
-                               WHERE c.building_id = b.id %s AND c.seats BETWEEN %d AND %d
+                               WHERE c.building_id = b.id %s %s AND c.seats BETWEEN %d AND %d
                                AND c.id IN (SELECT room_id
                                             FROM classroom_assets_junction
                                             GROUP BY room_id
                                             %s)
-                               ORDER BY b.building_name, c.name",$strFilterBuilding, $intMinSeats, $intMaxSeats, $strFilterTechnologies);
+                               ORDER BY b.building_name, c.name",$strFilterBuilding, $strFilterCampus, $intMinSeats, $intMaxSeats, $strFilterTechnologies);
 
-        echo $stringSql;
 
         $arrResults = [];
         foreach($this->dbConnection->interact($stringSql) as $objRow){
@@ -71,11 +72,11 @@ class Search
      * @return array arrBuildings
      */
     public function getAllBuildings(){
-        $sql = "SELECT * FROM building_list ORDER BY building_name";
+        $strSql = "SELECT * FROM building_list ORDER BY building_name";
 
         $arrBuildings = [];
 
-        foreach($this->dbConnection->interact($sql) as $objRow){
+        foreach($this->dbConnection->interact($strSql) as $objRow){
             $objBuilding = new Building($objRow['id'], $objRow['building_name'], $objRow['filter_code']);
             $arrBuildings[] = $objBuilding;
         }
@@ -83,6 +84,12 @@ class Search
         return $arrBuildings;
     }
 
+    /**
+     * getAllCampuses
+     * Queries the database and returns an array of all campuses.
+     *
+     * @return array arrCampuses
+     */
     public function getAllCampuses(){
         $strSql = "SELECT DISTINCT campus FROM building_list";
 
@@ -92,6 +99,25 @@ class Search
         }
 
         return $arrCampuses;
+    }
+
+    /**
+     * getBuildingsByCampus
+     * Queries the database based on the selected campus and creates a Building object for each result. Returns an array of Building objects.
+     *
+     * @param $strCampus
+     * @return array arrBuildings
+     */
+    public function getBuildingsByCampus($strCampus){
+        $strSql = "SELECT id, building_name, filter_code FROM building_list WHERE campus = '$strCampus' ORDER BY building_name";
+
+        $arrBuildings = [];
+        foreach($this->dbConnection->interact($strSql) as $objRow){
+            $objBuilding = new Building($objRow['id'], $objRow['building_name'], $objRow['filter_code']);
+            $arrBuildings[] = $objBuilding;
+        }
+
+        return $arrBuildings;
     }
 
     /**

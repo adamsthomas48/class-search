@@ -84,6 +84,7 @@ function search() {
     resultsArea.innerHTML = "";
 
     let building = document.getElementById("building").value;
+    let campus = document.getElementById("campus").value;
     let technologies = [];
 
     var inputElements = document.getElementsByName('technology');
@@ -94,14 +95,32 @@ function search() {
         }
     }
 
-    $.get("/_resources/dev/classroom-search/controller.php", {search: true, building: building, technologies: technologies, minCapacity: minCapacity, maxCapacity: maxCapacity}, function(data) {
+    $.get("/_resources/dev/classroom-search/controller.php", {search: true, building: building, technologies: technologies, minCapacity: minCapacity, maxCapacity: maxCapacity, campus: campus}, function(data) {
         let result = document.createElement("p");
         result.innerHTML = data;
-        resultsArea.appendChild(result);c
+        resultsArea.appendChild(result);
     });
 
 
 }
+
+// Set an on change listener for the campus dropdown to update the building dropdown
+document.getElementById("campus").addEventListener("change", function() {
+   console.log("Campus changed");
+   updateBuildingList(this.value);
+});
+
+
+function updateBuildingList(strCampus){
+    let buildingList = document.getElementById("building");
+    buildingList.innerHTML = "";
+
+    $.get("/_resources/dev/classroom-search/controller.php", {getBuildings: true, campus: strCampus}, function(data) {
+        console.log(data);
+        buildingList.innerHTML = data;
+    });
+}
+
 
 
 
