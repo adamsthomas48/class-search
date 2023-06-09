@@ -11,6 +11,11 @@
         </div>
         <form>
             <h3 class="text-bright-light h4">Location</h3>
+            <h4 class="h5">Campus</h4>
+            <select class="form-control" id="campus">
+                <option value="any">Logan</option>
+            </select>
+            <h4 class="h5">Building</h4>
             <select class="form-control" id="building">
                 <option value="any">Any Building</option>
                 <?php foreach($arrBuildings as $objBuilding){ ?>

@@ -97,7 +97,7 @@ function search() {
     $.get("/_resources/dev/classroom-search/controller.php", {search: true, building: building, technologies: technologies, minCapacity: minCapacity, maxCapacity: maxCapacity}, function(data) {
         let result = document.createElement("p");
         result.innerHTML = data;
-        resultsArea.appendChild(result);
+        resultsArea.appendChild(result);c
     });
 
 

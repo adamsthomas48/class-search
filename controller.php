@@ -5,6 +5,10 @@ $objSearch = new Search();
 
 $arrBuildings = $objSearch->getAllBuildings();
 $arrTechnologies = $objSearch->getAllTechnologies();
+$arrCampuses = $objSearch->getAllCampuses();
+
+echo var_dump($arrCampuses);
+
 $arrResults = [];
 
 

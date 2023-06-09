@@ -51,6 +51,7 @@ class Search
                                             %s)
                                ORDER BY b.building_name, c.name",$strFilterBuilding, $intMinSeats, $intMaxSeats, $strFilterTechnologies);
 
+        echo $stringSql;
 
         $arrResults = [];
         foreach($this->dbConnection->interact($stringSql) as $objRow){
@@ -80,6 +81,17 @@ class Search
         }
 
         return $arrBuildings;
+    }
+
+    public function getAllCampuses(){
+        $strSql = "SELECT DISTINCT campus FROM building_list";
+
+        $arrCampuses = [];
+        foreach($this->dbConnection->interact($strSql) as $objRow){
+            $arrCampuses[] = $objRow['campus'];
+        }
+
+        return $arrCampuses;
     }
 
     /**
