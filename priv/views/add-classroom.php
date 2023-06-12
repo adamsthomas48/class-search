@@ -19,7 +19,25 @@
 				<small id="equipment-image-help" class="form-text text-muted">Upload the image to the classroom-technology-images folder, publish the image and then get the image url. It will look like this (https://classroomsupport.usu.edu/classroom-technology-images/aste_106_e.jpg)
 				</small>
 			</div>
-			<div class="form-group">
+
+            <div class="form-group">
+                <label for="image-type">Image Type</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="image-type" id="2d-image" value="2D" required>
+                    <label class="form-check-label" for="2d-image">
+                        2D
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="image-type" id="3d-image" value="3D" required>
+                    <label class="form-check-label" for="3d-image">
+                        3D
+                    </label>
+                </div>
+            </div>
+
+
+            <div class="form-group">
 				<label for="seat-capacity">Seat Capacity</label>
 				<input type="number" class="form-control" id="seat-capacity" name="seat-capacity" required>
 			</div>

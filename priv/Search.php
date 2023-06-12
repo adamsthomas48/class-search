@@ -44,7 +44,7 @@ class Search
         $strFilterCampus = "AND b.campus = '$strCampus'";
 
 
-        $stringSql = sprintf("SELECT c.name, b.filter_code, b.building_name, c.seats, c.id, c.room_image_url, c.equipment_image_url
+        $stringSql = sprintf("SELECT c.image_type, c.name, b.filter_code, b.building_name, c.seats, c.id, c.room_image_url, c.equipment_image_url
                                FROM classrooms as c, building_list as b
                                WHERE c.building_id = b.id %s %s AND c.seats BETWEEN %d AND %d
                                AND c.id IN (SELECT room_id
@@ -56,7 +56,7 @@ class Search
 
         $arrResults = [];
         foreach($this->dbConnection->interact($stringSql) as $objRow){
-            $objResult = new Result($objRow['building_name'], $objRow['filter_code'], $objRow['name'], $objRow['seats'], $objRow['id'], $objRow['room_image_url'], $objRow['equipment_image_url']);
+            $objResult = new Result($objRow['building_name'], $objRow['filter_code'], $objRow['name'], $objRow['seats'], $objRow['id'], $objRow['room_image_url'], $objRow['equipment_image_url'], $objRow['image_type']);
             $arrResults[] = $objResult;
 
 

@@ -73,9 +73,10 @@ if(isset($_POST['submit-add-classroom'])){
     $strEquipmentImage = $_POST['equipment-image-url'];
     $strSeatCapacity = $_POST['seat-capacity'];
     $arrTech = $_POST['tech'];
+    $strImageType = $_POST['image-type'];
 
-    $arrCols = array("id", "name", "building_id", "seats", "room_image_url", "equipment_image_url");
-    $arrValues = array(null, $strRoomName, $intBuildingId, $strSeatCapacity, $strRoomImage, $strEquipmentImage);
+    $arrCols = array("id", "name", "building_id", "seats", "room_image_url", "equipment_image_url", "image_type");
+    $arrValues = array(null, $strRoomName, $intBuildingId, $strSeatCapacity, $strRoomImage, $strEquipmentImage, $strImageType);
     $objDbConnection->insertData('classrooms', $arrCols, $arrValues);
 
     $objNewClassroom = $objSearch->getClassroomByNameAndBuildingId($strRoomName, $intBuildingId);

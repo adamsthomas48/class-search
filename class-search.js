@@ -38,9 +38,13 @@ $(document).ready(function() {
         var roomUrl = link.data('room-url');
         var equipmentUrl = link.data('equipment-url');
         var capcity =link.data('capacity');
+        var imageType = link.data('image-type');
+
+        console.log(imageType);
 
         var modal = $(this)
         modal.find('.modal-title').text('Classroom Title')
+
         modal.find('.modal-title').text(roomName);
         modal.find('#capacity').text("Capacity: "+ capcity + " seats");
         for (let i = 0; i < equipment.length - 1; i++) {
@@ -48,18 +52,35 @@ $(document).ready(function() {
             li.innerHTML = equipment[i];
             modal.find('#equipment').append(li);
         }
-        
-        var roomViewer = new PhotoSphereViewer.Viewer({
-            container: document.querySelector('#room-image'),
-            panorama: 'https://classroomsupport.usu.edu' + roomUrl,
-            touchmoveTwoFingers: true,
-        });
 
-        var equipmentViewer = new PhotoSphereViewer.Viewer({
-            container: document.querySelector('#equipment-image'),
-            panorama: 'https://classroomsupport.usu.edu' + equipmentUrl,
-            touchmoveTwoFingers: true,
-        });
+        if(imageType == "3D"){
+            var roomViewer = new PhotoSphereViewer.Viewer({
+                container: document.querySelector('#room-image'),
+                panorama: 'https://classroomsupport.usu.edu' + roomUrl,
+                touchmoveTwoFingers: true,
+            });
+
+            var equipmentViewer = new PhotoSphereViewer.Viewer({
+                container: document.querySelector('#equipment-image'),
+                panorama: 'https://classroomsupport.usu.edu' + equipmentUrl,
+                touchmoveTwoFingers: true,
+            });
+        } else {
+            // Create a new image element
+            document.getElementById("room-image").classList.remove("modal-image");
+            document.getElementById("equipment-image").classList.remove("modal-image");
+            let roomImage = document.createElement("img");
+            roomImage.src = 'https://classroomsupport.usu.edu' + roomUrl;
+            roomImage.classList.add("img-fluid");
+
+            let equipmentImage = document.createElement("img");
+            equipmentImage.src = 'https://classroomsupport.usu.edu' + equipmentUrl;
+            equipmentImage.classList.add("img-fluid");
+
+            modal.find('#room-image').append(roomImage);
+            modal.find('#equipment-image').append(equipmentImage);
+        }
+
     })
 
     /**

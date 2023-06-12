@@ -10,8 +10,9 @@ class Result
     private $strEquipmentUrl;
     private $arrEquipment;
     private $intRoomId;
+    private $strImageType;
 
-    public function __construct($strBuildingName, $strFilterCode, $intRoomNumber, $intSeats, $intRoomId, $strRoomUrl, $strEquipmentUrl )
+    public function __construct($strBuildingName, $strFilterCode, $intRoomNumber, $intSeats, $intRoomId, $strRoomUrl, $strEquipmentUrl, $strImageType )
     {
         $this->strBuildingName = $strBuildingName;
         $this->strFilterCode = $strFilterCode;
@@ -21,6 +22,7 @@ class Result
         $this->strRoomUrl = $strRoomUrl;
         $this->strEquipmentUrl = $strEquipmentUrl;
         $this->setEquipment($intRoomId);
+        $this->strImageType = $strImageType;
     }
 
     /**
@@ -103,6 +105,11 @@ class Result
             $strEquipment .= $equipment . "\n";
         }
         return $strEquipment;
+    }
+
+    public function getImageType()
+    {
+        return $this->strImageType;
     }
 
     /**

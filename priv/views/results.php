@@ -30,8 +30,8 @@ echo "<h3 class='text-bright-light h4'>$objCurrBuilding</h3>";
                data-equipment-url="<?php echo $objResult->getEquipmentUrl() ?>"
                data-equipment="<?php echo $objResult->getEquipment() ?>"
                data-capacity="<?php echo $objResult->getSeats() ?>"
-
                data-roomname="<?php echo  $objResult->getBuildingName() . " " . $objResult->getFilterCode() . " " . $objResult->getRoomNumber() ?>"
+               data-image-type="<?php echo $objResult->getImageType() ?>"
             ><?php echo $objResult->getFilterCode() . " " . $objResult->getRoomNumber() ?></a></td>
     </tr>
 
