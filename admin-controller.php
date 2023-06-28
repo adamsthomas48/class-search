@@ -7,8 +7,10 @@ $urlComponents = parse_url($currentPageUrl);
 parse_str($urlComponents['query'], $params);
 $intBuildingId = $params["building_id"];
 $strBuildingCode = $params["building_code"];
+$arrPathParts = explode('/', $urlComponents['path']);
+$strAccessGroup = ucfirst(end($arrPathParts));
 
-$baseUrl = 'https://classroomsupport.usu.edu/development/classroom_information/admin';
+$baseUrl = 'https://classroomsupport.usu.edu/development/classroom_information/admin/' . strtolower($strAccessGroup);
 
 $objSearch = new Search();
 $objDbConnection = new DatabaseConnection();
@@ -23,6 +25,8 @@ if(isset($_GET['deleteClassroom'])){
 }
 
 if($params["add_building"]){
+    $arrCampuses = $objSearch->getAllCampuses();
+
     include 'priv/views/add-building.php';
 }
 else if($params["add_classroom"]){
@@ -47,7 +51,14 @@ else if($params["building_id"]){
     $objBuildingInfo = $objSearch->getBuildingById($params["building_id"])[0];
     include 'priv/views/admin-building.php';
 } else {
-    $arrBuildings = $objSearch->getAllBuildings();
+
+
+    if($strAccessGroup == "Logan"){
+        $arrBuildings = $objSearch->getAllBuildings();
+    } else {
+        $arrBuildings = $objSearch->getBuildingsByCampus($strAccessGroup);
+    }
+
     include 'priv/views/admin.php';
 }
 /**
@@ -57,8 +68,15 @@ if(isset($_POST['submit-add-building'])){
     $strBuildingName = $_POST['building-name'];
     $strBuildingCode = $_POST['building-code'];
 
-    $arrCols = array("id", "building_name", "filter_code");
-    $arrValues = array(null, $strBuildingName, $strBuildingCode);
+    $arrCols = array("id", "building_name", "filter_code", "campus");
+
+    if($strAccessGroup == "Logan"){
+        $strCampus = $_POST['campus'];
+    } else {
+        $strCampus = $strAccessGroup;
+    }
+
+    $arrValues = array(null, $strBuildingName, $strBuildingCode, $strCampus);
     $objDbConnection->insertData('building_list', $arrCols, $arrValues);
 
     echo '<p class="text-bold text-center">Building Added!</p>';
@@ -127,12 +145,13 @@ if(isset($_POST['update-classroom'])){
     $strClassroomImage = $_POST['classroom-image'];
     $strEquipmentImage = $_POST['equipment-image'];
     $intClassroomCapacity = $_POST['classroom-capacity'];
+    $strImageType = $_POST['image-type'];
     $arrTech = $_POST['tech'];
 
 
 
-    $arrCols = array("name", "room_image_url", "equipment_image_url", "seats");
-    $arrValues = array($strClassroomName, $strClassroomImage, $strEquipmentImage, $intClassroomCapacity);
+    $arrCols = array("name", "room_image_url", "equipment_image_url", "seats", "image_type");
+    $arrValues = array($strClassroomName, $strClassroomImage, $strEquipmentImage, $intClassroomCapacity, $strImageType);
 
     $objDbConnection->updateData('classrooms', $arrCols, $arrValues, 'id', $params['classroom_id']);
 

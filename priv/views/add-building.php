@@ -13,12 +13,19 @@
                 <small id="building-code" class="form-text text-muted">This will show up as "building-code room-name" in the search results.</small>
 
             </div>
-            <div class="form-group">
-                <label for="create-building">Campus</label>
-                <input type="text" class="form-control" id="building-code" name="building-code" required >
-                <small id="building-code" class="form-text text-muted">This will show up as "building-code room-name" in the search results.</small>
 
+            <?php if($strAccessGroup == "Logan"){ ?>
+            <div class="form-group">
+                <label for="campus">Campus</label>
+                <select class="form-control" id="campus" name="campus">
+                    <?php foreach($arrCampuses as $strCampus){ ?>
+                        <option value="<?php echo $strCampus; ?>"><?php echo $strCampus; ?></option>
+                    <?php } ?>
+
+                </select>
             </div>
+            <?php } ?>
+
             <div class="d-flex justify-content-end">
                 <button type="submit" class="btn btn-success" name="submit-add-building">Create Building</button>
 

@@ -21,6 +21,33 @@
                 <label for="classroom-capacity">Classroom Capacity</label>
                 <input type="number" class="form-control" id="classroom-capacity" name="classroom-capacity" value="<?php echo $objClassroomInfo['seats'] ?>" required >
             </div>
+            <div class="form-group">
+                <label for="image-type">Image Type</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="image-type" id="2d-image" value="2D" required
+                        <?php
+                            if($objClassroomInfo['image_type'] == "2D"){
+                                echo 'checked';
+                            }
+                        ?>
+                    >
+                    <label class="form-check-label" for="2d-image">
+                        2D
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="image-type" id="3d-image" value="3D" required
+                        <?php
+                        if($objClassroomInfo['image_type'] == "3D"){
+                            echo 'checked';
+                        }
+                        ?>
+                    >
+                    <label class="form-check-label" for="3d-image">
+                        3D
+                    </label>
+                </div>
+            </div>
 
             <?php
                 foreach($arrAllTech as $k=>$objTech){
