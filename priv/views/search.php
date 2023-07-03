@@ -14,7 +14,13 @@
             <h4 class="h5">Campus</h4>
             <select class="form-control" id="campus">
                 <?php foreach($arrCampuses as $objCampus){ ?>
-                    <option value="<?php echo $objCampus; ?>"><?php echo $objCampus; ?></option>
+                    <option value="<?php echo $objCampus; ?>"
+                        <?php
+                        if($objCampus == "Logan"){
+                            echo " selected";
+                        }
+                        ?>
+                    ><?php echo $objCampus; ?></option>
                 <?php } ?>
             </select>
             <h4 class="h5">Building</h4>

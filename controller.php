@@ -3,7 +3,7 @@ include 'autoloader.php';
 
 $objSearch = new Search();
 
-$arrBuildings = $objSearch->getAllBuildings();
+$arrBuildings = $objSearch->getBuildingsByCampus("Logan");
 $arrTechnologies = $objSearch->getAllTechnologies();
 $arrCampuses = $objSearch->getAllCampuses();
 

@@ -8,12 +8,15 @@ parse_str($urlComponents['query'], $params);
 $intBuildingId = $params["building_id"];
 $strBuildingCode = $params["building_code"];
 $arrPathParts = explode('/', $urlComponents['path']);
-$strAccessGroup = ucfirst(end($arrPathParts));
+$strAccessGroup = str_replace('-', ' ', ucfirst(end($arrPathParts)));
 
-$baseUrl = 'https://classroomsupport.usu.edu/development/classroom_information/admin/' . strtolower($strAccessGroup);
+$baseUrl = 'https://classroomsupport.usu.edu/development/classroom_information/admin/' . end($arrPathParts);
+
 
 $objSearch = new Search();
 $objDbConnection = new DatabaseConnection();
+$arrCampusList = $objSearch->getGeneralCampusList();
+$intCampusId = $objSearch->getCampusId($strAccessGroup);
 
 $arrAllTech = $objSearch->getAllTechnologies();
 if(isset($_GET['deleteAsset'])){
@@ -53,13 +56,13 @@ else if($params["building_id"]){
 } else {
 
 
-    if($strAccessGroup == "Logan"){
-        $arrBuildings = $objSearch->getAllBuildings();
-    } else {
-        $arrBuildings = $objSearch->getBuildingsByCampus($strAccessGroup);
-    }
+    $arrBuildings = $objSearch->getBuildingsByCampus($strAccessGroup);
 
     include 'priv/views/admin.php';
+    if($strAccessGroup == "Logan"){
+        $arrCampusList = $objSearch->getGeneralCampusList();
+        include 'priv/views/campus-list.php';
+    }
 }
 /**
  * Logic from add-building.php

@@ -41,12 +41,12 @@ class Search
             $strFilterBuilding = "AND building_id = $strBuildingId";
         }
 
-        $strFilterCampus = "AND b.campus = '$strCampus'";
+        $strFilterCampus = "AND ca.name = '$strCampus'";
 
 
-        $stringSql = sprintf("SELECT c.image_type, c.name, b.filter_code, b.building_name, c.seats, c.id, c.room_image_url, c.equipment_image_url
-                               FROM classrooms as c, building_list as b
-                               WHERE c.building_id = b.id %s %s AND c.seats BETWEEN %d AND %d
+        $stringSql = sprintf("SELECT ca.name, c.image_type, c.name, b.filter_code, b.building_name, c.seats, c.id, c.room_image_url, c.equipment_image_url
+                               FROM classrooms as c, building_list as b, campus as ca
+                               WHERE c.building_id = b.id AND b.campus = ca.id %s %s AND c.seats BETWEEN %d AND %d
                                AND c.id IN (SELECT room_id
                                             FROM classroom_assets_junction
                                             GROUP BY room_id
@@ -86,12 +86,13 @@ class Search
 
     /**
      * getAllCampuses
-     * Queries the database and returns an array of all campuses.
+     * Queries the database and returns an array of all campuses that have at least one building
+     * associated with them.
      *
      * @return array arrCampuses
      */
     public function getAllCampuses(){
-        $strSql = "SELECT DISTINCT campus FROM building_list";
+        $strSql = "SELECT DISTINCT ca.name as 'campus' FROM building_list as b, campus as ca WHERE b.campus = ca.id ORDER BY ca.name";
 
         $arrCampuses = [];
         foreach($this->dbConnection->interact($strSql) as $objRow){
@@ -109,7 +110,10 @@ class Search
      * @return array arrBuildings
      */
     public function getBuildingsByCampus($strCampus){
-        $strSql = "SELECT id, building_name, filter_code FROM building_list WHERE campus = '$strCampus' ORDER BY building_name";
+        $strSql = "SELECT b.id, b.building_name, b.filter_code 
+                    FROM building_list as b, campus as ca
+                    WHERE b.campus = ca.id AND ca.name = '$strCampus' 
+                    ORDER BY building_name";
 
         $arrBuildings = [];
         foreach($this->dbConnection->interact($strSql) as $objRow){
@@ -118,6 +122,41 @@ class Search
         }
 
         return $arrBuildings;
+    }
+
+    /**
+     * getCampusId
+     * Queries the database and returns the id of the campus with the given name.
+     *
+     * @param $strCampusName
+     * @return int id
+     */
+    public function getCampusId($strCampusName){
+        $strSql = "SELECT id FROM campus WHERE name = '$strCampusName' LIMIT 1";
+
+        return $this->dbConnection->interact($strSql)[0]['id'];
+    }
+
+
+    /**
+     * getGeneralCampusList
+     * Queries the database and returns an array of all campuses regardless of if they have any buildings
+     * or classrooms in them.
+     *
+     * @return array arrCampuses
+     */
+    public function getGeneralCampusList(){
+        $strSql = "SELECT id, name FROM campus ORDER BY name";
+
+        $arrCampuses = [];
+        foreach($this->dbConnection->interact($strSql) as $objRow){
+            $arrRow = [];
+            $arrRow['id'] = $objRow['id'];
+            $arrRow['name'] = $objRow['name'];
+            $arrCampuses[] = $arrRow;
+        }
+
+        return $arrCampuses;
     }
 
 

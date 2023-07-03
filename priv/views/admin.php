@@ -14,9 +14,7 @@
             <?php
             foreach($arrBuildings as $objBuilding){
                 ?>
-
-
-                <li><a <?php echo 'href="'. $baseUrl.'?building_id=' . $objBuilding->getId() . '"' ?>><p><?php echo $objBuilding->getName(); ?></p></a></li>
+                <li><a <?php echo 'href="'. $baseUrl.'?building_id=' . $objBuilding->getId() . '"' ?>><?php echo $objBuilding->getName(); ?></a></li>
 
                 <?php
             }

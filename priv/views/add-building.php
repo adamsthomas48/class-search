@@ -18,8 +18,9 @@
             <div class="form-group">
                 <label for="campus">Campus</label>
                 <select class="form-control" id="campus" name="campus">
-                    <?php foreach($arrCampuses as $strCampus){ ?>
-                        <option value="<?php echo $strCampus; ?>"><?php echo $strCampus; ?></option>
+                    <option value="1">Logan</option>
+                    <?php foreach($arrCampusList as $arrCampusResult){ ?>
+                        <option value="<?php echo $arrCampusResult['id']; ?>"><?php echo $arrCampusResult['name']; ?></option>
                     <?php } ?>
 
                 </select>
