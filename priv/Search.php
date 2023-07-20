@@ -18,7 +18,10 @@ class Search
      *  Takes a building id, array of technology ids, and a minimum and maximum capacity for a classroom. Queries the database
      *  and creates a Result object for each result. Returns an array of Result objects.
      *
-     * @param string $strBuildingId, array $arrTechnologyIds, int $intMinCapacity, int $intMaxCapacity
+     * @param string $strBuildingId
+     * @param array $arrTechnologyIds
+     * @param int $intMinCapacity
+     * @param int $intMaxCapacity
      * @return array arrResults
      */
     public function getResults($strBuildingId = 'any', $arrTechnologies = null, $intMinSeats = 0, $intMaxSeats = 500, $strCampus = "Logan"){
@@ -27,8 +30,8 @@ class Search
         // loop through each technology with key and value
         if($arrTechnologies){
             $strFilterTechnologies .= "HAVING SUM(";
-            foreach($arrTechnologies as $k => $intTechId){
-                if($k < count($arrTechnologies) - 1){
+            foreach($arrTechnologies as $intK => $intTechId){
+                if($intK < count($arrTechnologies) - 1){
                     $strFilterTechnologies .= "(asset_id = $intTechId) + ";
                 } else {
                     $strFilterTechnologies .= "(asset_id = $intTechId)) = " . count($arrTechnologies);
@@ -110,7 +113,7 @@ class Search
      * @return array arrBuildings
      */
     public function getBuildingsByCampus($strCampus){
-        $strSql = "SELECT b.id, b.building_name, b.filter_code 
+        $strSql = "SELECT b.id, b.building_name, b.filter_code
                     FROM building_list as b, campus as ca
                     WHERE b.campus = ca.id AND ca.name = '$strCampus' 
                     ORDER BY building_name";

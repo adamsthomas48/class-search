@@ -9,14 +9,20 @@
 			</div>
 			<div class="form-group">
 				<label for="room-image-url">Room Image URL</label>
-				<input type="text" class="form-control" id="room-image-url" name="room-image-url" required>
-				<small id="room-image-help" class="form-text text-muted">Upload the image to the classroom-technology-images folder, publish the image and then get the image url. It will look like this (https://classroomsupport.usu.edu/classroom-technology-images/aste_106_e.jpg)
+				<input type="text" class="form-control" id="room-image-url" name="room-image-url" placeholder="test-image.jpg" required>
+				<small id="room-image-help" class="form-text text-muted">
+                    IMPORTANT NOTICE: For images to work, they need to be uploaded to the correct campus folder inside of the
+                    <a href="https://a.cms.omniupdate.com/11/#usu/usu/Class_Room_Support/browse/staging/classroom-technology-images" target="_blank">classroom-technology-images folder.</a>
+                    Make sure that the images are uploaded AND published to the correct campus folder and then input the filename into the field above. Example: test-class.jpg
+
 				</small>
 			</div>
 			<div class="form-group">
 				<label for="equipment-image-url">Equipment Image URL</label>
-				<input type="text" class="form-control" id="equipment-image-url" name="equipment-image-url" required>
-				<small id="equipment-image-help" class="form-text text-muted">Upload the image to the classroom-technology-images folder, publish the image and then get the image url. It will look like this (https://classroomsupport.usu.edu/classroom-technology-images/aste_106_e.jpg)
+				<input type="text" class="form-control" id="equipment-image-url" name="equipment-image-url" placeholder="test-image.jpg" required>
+				<small id="equipment-image-help" class="form-text text-muted">IMPORTANT NOTICE: For images to work, they need to be uploaded to the correct campus folder inside of the
+                    <a href="https://a.cms.omniupdate.com/11/#usu/usu/Class_Room_Support/browse/staging/classroom-technology-images" target="_blank">classroom-technology-images folder.</a>
+                    Make sure that the images are uploaded AND published to the correct campus folder and then input the filename into the field above. Example: test-class.jpg
 				</small>
 			</div>
 

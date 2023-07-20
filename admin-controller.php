@@ -8,7 +8,14 @@ parse_str($urlComponents['query'], $params);
 $intBuildingId = $params["building_id"];
 $strBuildingCode = $params["building_code"];
 $arrPathParts = explode('/', $urlComponents['path']);
-$strAccessGroup = str_replace('-', ' ', ucfirst(end($arrPathParts)));
+$strCampusUrl = end($arrPathParts);
+$strAccessGroup = str_replace('-', ' ', $strCampusUrl);
+$strAccessGroup = ucfirst($strAccessGroup);
+$arrWords = explode(" ", $strAccessGroup);
+if (count($arrWords) > 1) {
+    $arrWords[1] = ucfirst($arrWords[1]);
+    $strAccessGroup = implode(" ", $arrWords);
+}
 
 $baseUrl = 'https://classroomsupport.usu.edu/development/classroom_information/admin/' . end($arrPathParts);
 
@@ -74,9 +81,9 @@ if(isset($_POST['submit-add-building'])){
     $arrCols = array("id", "building_name", "filter_code", "campus");
 
     if($strAccessGroup == "Logan"){
-        $strCampus = $_POST['campus'];
+        $strCampus = 1;
     } else {
-        $strCampus = $strAccessGroup;
+        $strCampus = $objSearch->getCampusId($strAccessGroup);
     }
 
     $arrValues = array(null, $strBuildingName, $strBuildingCode, $strCampus);
@@ -90,8 +97,8 @@ if(isset($_POST['submit-add-building'])){
  */
 if(isset($_POST['submit-add-classroom'])){
     $strRoomName = $_POST['room-name'];
-    $strRoomImage = $_POST['room-image-url'];
-    $strEquipmentImage = $_POST['equipment-image-url'];
+    $strRoomImage = "/classroom-technology-images/" . $strCampusUrl . "/" . $_POST['room-image-url'];
+    $strEquipmentImage = "/classroom-technology-images/" . $strCampusUrl . "/" . $_POST['equipment-image-url'];
     $strSeatCapacity = $_POST['seat-capacity'];
     $arrTech = $_POST['tech'];
     $strImageType = $_POST['image-type'];

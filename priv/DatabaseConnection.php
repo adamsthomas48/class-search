@@ -64,12 +64,12 @@ class DatabaseConnection
     {
         $this->setConnection();
         $strCols = implode(', ', $arrCols);
-        $stmt = $this->objConnection->prepare(sprintf("INSERT INTO %s (%s) VALUES (%s)", $strTableName, $strCols, $this->setValueString($arrCols)));
+        $objStmt = $this->objConnection->prepare(sprintf("INSERT INTO %s (%s) VALUES (%s)", $strTableName, $strCols, $this->setValueString($arrCols)));
 
 
         try {
             $this->objConnection->beginTransaction();
-            $stmt->execute($arrValues);
+            $objStmt->execute($arrValues);
             $this->objConnection->commit();
         } catch (Exception $e){
             $this->objConnection->rollback();
@@ -93,9 +93,9 @@ class DatabaseConnection
 
         try{
             $this->setConnection();
-            $sql = 'DELETE FROM ' . $strTableName . ' WHERE ' . $strColumn . ' = ' . $intItemId;
-            $stmt = $this->objConnection->prepare($sql);
-            $stmt->execute();
+            $strSql = 'DELETE FROM ' . $strTableName . ' WHERE ' . $strColumn . ' = ' . $intItemId;
+            $objStmt = $this->objConnection->prepare($strSql);
+            $objStmt->execute();
             $this->objConnection = null;
         } catch (PDOException $e) {
 
@@ -121,8 +121,8 @@ class DatabaseConnection
         $strSql = sprintf("UPDATE %s SET %s WHERE %s = %s", $strTableName, $this->createUpdateString($arrCols, $arrValues), $strIdColumn, $intItemId);
 
         try{
-            $stmt = $this->objConnection->prepare($strSql);
-            $stmt->execute();
+            $objStmt = $this->objConnection->prepare($strSql);
+            $objStmt->execute();
             $this->objConnection = null;
         } catch (PDOException $e) {
 
@@ -201,10 +201,10 @@ class DatabaseConnection
     public function existsInDatabase($strTableName, $arrCols, $arrValues){
         $this->setConnection();
         $strSql = sprintf("SELECT * FROM %s WHERE %s", $strTableName, $this->createExistsString($arrCols, $arrValues));
-        $stmt = $this->objConnection->prepare($strSql);
-        $stmt->execute();
+        $objStmt = $this->objConnection->prepare($strSql);
+        $objStmt->execute();
         $this->objConnection = null;
-        if($stmt->rowCount() > 0){
+        if($objStmt->rowCount() > 0){
             return true;
         } else {
             return false;
@@ -226,8 +226,8 @@ class DatabaseConnection
         $strSql = sprintf("DELETE FROM %s WHERE %s", $strTableName, $this->createExistsString($arrCols, $arrValues));
         echo $strSql . '<br>';
 
-        $stmt = $this->objConnection->prepare($strSql);
-        return $stmt->execute();
+        $objStmt = $this->objConnection->prepare($strSql);
+        return $objStmt->execute();
 
     }
 
