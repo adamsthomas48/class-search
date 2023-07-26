@@ -22,6 +22,7 @@ class Search
      * @param array $arrTechnologyIds
      * @param int $intMinCapacity
      * @param int $intMaxCapacity
+     * @param string $strCampus
      * @return array arrResults
      */
     public function getResults($strBuildingId = 'any', $arrTechnologies = null, $intMinSeats = 0, $intMaxSeats = 500, $strCampus = "Logan"){
@@ -109,7 +110,7 @@ class Search
      * getBuildingsByCampus
      * Queries the database based on the selected campus and creates a Building object for each result. Returns an array of Building objects.
      *
-     * @param $strCampus
+     * @param string $strCampus
      * @return array arrBuildings
      */
     public function getBuildingsByCampus($strCampus){
@@ -131,7 +132,7 @@ class Search
      * getCampusId
      * Queries the database and returns the id of the campus with the given name.
      *
-     * @param $strCampusName
+     * @param string $strCampusName
      * @return int id
      */
     public function getCampusId($strCampusName){

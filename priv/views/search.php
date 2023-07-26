@@ -16,7 +16,7 @@
                 <?php foreach($arrCampuses as $objCampus){ ?>
                     <option value="<?php echo $objCampus; ?>"
                         <?php
-                        if($objCampus == "Logan"){
+                        if($objCampus === "Logan"){
                             echo " selected";
                         }
                         ?>

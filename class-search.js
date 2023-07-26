@@ -127,7 +127,6 @@ function search() {
 
 // Set an on change listener for the campus dropdown to update the building dropdown
 document.getElementById("campus").addEventListener("change", function() {
-   console.log("Campus changed");
    updateBuildingList(this.value);
 });
 
@@ -137,7 +136,6 @@ function updateBuildingList(strCampus){
     buildingList.innerHTML = "";
 
     $.get("/_resources/dev/classroom-search/controller.php", {getBuildings: true, campus: strCampus}, function(data) {
-        console.log(data);
         buildingList.innerHTML = data;
     });
 }

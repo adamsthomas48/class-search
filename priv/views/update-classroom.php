@@ -38,7 +38,7 @@
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="image-type" id="3d-image" value="3D" required
                         <?php
-                        if($objClassroomInfo['image_type'] == "3D"){
+                        if($objClassroomInfo['image_type'] === "3D"){
                             echo 'checked';
                         }
                         ?>

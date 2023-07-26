@@ -14,7 +14,7 @@
 
             </div>
 
-            <?php if($strAccessGroup == "Logan"){ ?>
+            <?php if($strAccessGroup === "Logan"){ ?>
             <div class="form-group">
                 <label for="campus">Campus</label>
                 <select class="form-control" id="campus" name="campus">
